@@ -17,7 +17,7 @@
         "target_repo": "MXPicture/mac-dev-playbook",
         "target_branch": "master",
         "target_token_name": "ACCESS_TOKEN",
-        "upstream_repo": "MXPicture/backblaze-personal-wine",
+        "upstream_repo": "geerlingguy/mac-dev-playbook",
         "upstream_branch": "master"
     }
 ]
