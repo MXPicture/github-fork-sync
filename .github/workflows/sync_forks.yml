@@ -33,9 +33,9 @@ jobs:
         with:
           script: |
             let output = ${{ steps.get.outputs.matrix }}
-            console.log("Count repos: " + (output.length))
+            console.log("Count repos: " + (output.include.length))
 
-            if (output.length == 0) {
+            if (output.include.length == 0) {
               console.log("empty")
               return 'true'
             } else {
@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: 
-        fork: ${{ fromJSON(needs.get_forks.outputs.forks) }}
+        fork: ${{ fromJSON(needs.get_forks.outputs.forks).include }}
     steps:
       # Step 1: run a standard checkout action, provided by github
       - name: Checkout target repo
