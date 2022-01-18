@@ -1,13 +1,13 @@
 name: Sync forked Repositories
 
 on:
-  #schedule:
+  schedule:
     # 07:00 UTC each day
-    #- cron:  '0 7 * * *'
+    - cron:  '0 7 * * *'
 
-  #push:
-  #  branches:
-  #    - "main"
+  push:
+    branches:
+      - "main"
 
   workflow_dispatch:
 

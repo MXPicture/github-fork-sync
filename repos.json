@@ -2,21 +2,18 @@
     {
         "target_repo": "MXPicture/backblaze-personal-wine",
         "target_branch": "master",
-        "target_token_name": "ACCESS_TOKEN",
         "upstream_repo": "tom300z/backblaze-personal-wine",
         "upstream_branch": "master"
     },
     {
         "target_repo": "MXPicture/faker",
         "target_branch": "main",
-        "target_token_name": "ACCESS_TOKEN",
         "upstream_repo": "faker-js/faker",
         "upstream_branch": "main"
     },
     {
         "target_repo": "MXPicture/mac-dev-playbook",
         "target_branch": "master",
-        "target_token_name": "ACCESS_TOKEN",
         "upstream_repo": "geerlingguy/mac-dev-playbook",
         "upstream_branch": "master"
     }
