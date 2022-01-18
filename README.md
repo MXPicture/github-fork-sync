@@ -1,2 +1,1 @@
-# github-fork-sync
-Workflows for syncing forked repos
+# Workflows for syncing forked repos
