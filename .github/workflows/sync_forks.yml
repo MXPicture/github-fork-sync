@@ -15,24 +15,23 @@ jobs:
   get_forks:
     runs-on: ubuntu-latest
     outputs:
-      forks: ${{ steps.get.outputs.result.prop }}
+      forks: ${{ steps.get.outputs.result.matrix }}
       empty_forks: ${{ steps.check.outputs.result }}
     steps:
       - uses: actions/checkout@v2
 
       - name: Get forked repos
-        uses: notiz-dev/github-action-json-property@release
         id: get
-        with: 
-            path: 'repos.json'
-            prop_path: 'repos'
+        uses: JoshuaTheMiller/conditional-build-matrix        
+        with:
+          inputFile: './repos.json'
       - run: echo ${{fromJSON(steps.get.outputs.prop)}} 
       - name: Check empty
         uses: actions/github-script@v5
         id: check
         with:
           script: |
-            let output = ${{ steps.get.outputs.prop }}
+            let output = ${{ steps.get.outputs.matrix }}
             console.log("Count repos: " + (output.length))
 
             if (output.length == 0) {
