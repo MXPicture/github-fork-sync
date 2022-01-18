@@ -21,7 +21,7 @@ jobs:
       - name: Get forked repos
         id: get
         run: |
-          content=`cat ./repos.json`
+          content=`cat ./../../repos.json`
           echo "::set-output name=result::$content"
 
       - name: Check tags empty
