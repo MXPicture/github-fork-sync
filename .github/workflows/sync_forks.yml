@@ -25,7 +25,7 @@ jobs:
         uses: JoshuaTheMiller/conditional-build-matrix@0.0.1
         with:
           inputFile: './repos.json'
-      - run: echo ${{fromJSON(steps.get.outputs.prop)}} 
+          
       - name: Check empty
         uses: actions/github-script@v5
         id: check
