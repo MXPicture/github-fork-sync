@@ -1,0 +1,81 @@
+name: Sync forked Repositories
+
+on:
+  #schedule:
+    # 07:00 UTC each day
+    #- cron:  '0 7 * * *'
+
+  #push:
+  #  branches:
+  #    - "main"
+
+  workflow_dispatch:
+
+jobs:
+  get_forks:
+    runs-on: ubuntu-latest
+    outputs:
+      forks: ${{ steps.get.outputs.result.repos }}
+      empty_forks: ${{ steps.check.outputs.result }}
+    steps:
+      - name: Get forked repos
+        id: get
+        run: |
+          content=`cat ./repos.json`
+          echo "::set-output name=result::$content"
+
+      - name: Check tags empty
+        uses: actions/github-script@v5
+        id: check
+        with:
+          script: |
+            let output = ${{ steps.get.outputs.result.repos }}
+            console.log("Count repos: " + (output.length))
+            
+            if (output.length == 0) {
+              console.log("empty")
+              return 'true'
+            } else {
+              console.log("not empty")
+              return 'false'
+            }
+
+  sync:
+    needs: get_forks
+    if: ${{ fromJSON(needs.get_forks.outputs.empty_forks) == 'false' }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        fork: ${{ fromJSON(needs.get_forks.outputs.forks) }}
+    steps:
+      # Step 1: run a standard checkout action, provided by github
+      - name: Checkout target repo
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ matrix.fork.target_repo }}
+          ref: ${{ matrix.fork.target_branch }}
+          token: ${{ secrets[matrix.fork.target_token_name] }}
+
+    # Step 2: run the sync action
+      - name: Sync upstream changes
+        id: sync
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3.2
+        with:
+          target_sync_branch: ${{ matrix.fork.target_branch }}
+          target_repo_token: ${{ secrets[matrix.fork.target_token_name] }}
+          upstream_sync_branch: ${{ matrix.fork.upstream_branch }}
+          upstream_sync_repo: ${{ matrix.fork.upstream_repo }}
+
+    # Step 3: Display a message based on the sync output var 'has_new_commits'
+      - name: New commits found
+        if: steps.sync.outputs.has_new_commits == 'true'
+        run: echo "New commits were found to sync."
+      
+      - name: No new commits
+        if: steps.sync.outputs.has_new_commits == 'false'
+        run: echo "There were no new commits."
+        
+      - name: Show value of 'has_new_commits'
+        run: echo ${{ steps.sync.outputs.has_new_commits }}
+
+
