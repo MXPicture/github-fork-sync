@@ -31,7 +31,6 @@ jobs:
         id: check
         with:
           script: |
-            console.log(${{ steps.get.outputs.result }})
             let output = ${{ steps.get.outputs.result.repos }}
             console.log("Count repos: " + (output.length))
             
