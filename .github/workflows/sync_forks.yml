@@ -23,19 +23,25 @@ jobs:
       - name: Get forked repos
         id: get
         run: |
-          content=`cat ./repos.json`
-          echo "::set-output name=result::$content"
+          JSON=$(cat ./repos.json)
+          echo "::set-output name=matrix::${JSON//'%'/'%25'}"
 
       - name: Check empty
         uses: actions/github-script@v5
         id: check
         with:
           script: |
-            let output = ${{ steps.get.outputs.result }}
-            console.log("Count repos: " + (JSON.stringify(output)))
-            
-            
+            let output = ${{ steps.get.outputs.matrix }}
+            console.log("Count repos: " + (output.length))
 
+            if (output.length == 0) {
+              console.log("empty")
+              return 'true'
+            } else {
+              console.log("not empty")
+              return 'false'
+            }
+          
   sync:
     needs: get_forks
     if: ${{ fromJSON(needs.get_forks.outputs.empty_forks) == 'false' }}
