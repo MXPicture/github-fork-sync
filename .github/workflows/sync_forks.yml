@@ -57,7 +57,7 @@ jobs:
         with:
           repository: ${{ matrix.fork.target_repo }}
           ref: ${{ matrix.fork.target_branch }}
-          token: ${{ secrets[matrix.fork.target_token_name] }}
+          token: ${{ secrets.ACCESS_TOKEN }}
 
     # Step 2: run the sync action
       - name: Sync upstream changes
@@ -65,7 +65,7 @@ jobs:
         uses: aormsby/Fork-Sync-With-Upstream-action@v3.2
         with:
           target_sync_branch: ${{ matrix.fork.target_branch }}
-          target_repo_token: ${{ secrets[matrix.fork.target_token_name] }}
+          target_repo_token: ${{ secrets.ACCESS_TOKEN }}
           upstream_sync_branch: ${{ matrix.fork.upstream_branch }}
           upstream_sync_repo: ${{ matrix.fork.upstream_repo }}
 
