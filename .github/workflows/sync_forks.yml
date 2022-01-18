@@ -15,23 +15,24 @@ jobs:
   get_forks:
     runs-on: ubuntu-latest
     outputs:
-      forks: ${{ steps.get.outputs.result.repos }}
+      forks: ${{ steps.get.outputs.result.prop }}
       empty_forks: ${{ steps.check.outputs.result }}
     steps:
       - uses: actions/checkout@v2
 
       - name: Get forked repos
+        uses: notiz-dev/github-action-json-property@release
         id: get
-        run: |
-          JSON=$(cat ./repos.json)
-          echo "::set-output name=matrix::${JSON//'%'/'%25'}"
+        with: 
+            path: 'repos.json'
+            prop_path: 'repos'
 
       - name: Check empty
         uses: actions/github-script@v5
         id: check
         with:
           script: |
-            let output = ${{ toJSON(steps.get.outputs.matrix) }}
+            let output = ${{ steps.get.outputs.prop }}
             console.log("Count repos: " + (output.length))
 
             if (output.length == 0) {

@@ -1,23 +1,25 @@
-[
-    {
-        "target_repo": "https://github.com/MXPicture/backblaze-personal-wine",
-        "target_branch": "master",
-        "target_token_name": "ACCESS_TOKEN",
-        "upstream_repo": "https://github.com/tom300z/backblaze-personal-wine",
-        "upstream_branch": "master"
-    },
-    {
-        "target_repo": "https://github.com/MXPicture/faker",
-        "target_branch": "main",
-        "target_token_name": "ACCESS_TOKEN",
-        "upstream_repo": "https://github.com/faker-js/faker",
-        "upstream_branch": "main"
-    },
-    {
-        "target_repo": "https://github.com/MXPicture/mac-dev-playbook",
-        "target_branch": "master",
-        "target_token_name": "ACCESS_TOKEN",
-        "upstream_repo": "https://github.com/geerlingguy/mac-dev-playbook",
-        "upstream_branch": "master"
-    }
-]
+{
+    "repos": [
+        {
+            "target_repo": "https://github.com/MXPicture/backblaze-personal-wine",
+            "target_branch": "master",
+            "target_token_name": "ACCESS_TOKEN",
+            "upstream_repo": "https://github.com/tom300z/backblaze-personal-wine",
+            "upstream_branch": "master"
+        },
+        {
+            "target_repo": "https://github.com/MXPicture/faker",
+            "target_branch": "main",
+            "target_token_name": "ACCESS_TOKEN",
+            "upstream_repo": "https://github.com/faker-js/faker",
+            "upstream_branch": "main"
+        },
+        {
+            "target_repo": "https://github.com/MXPicture/mac-dev-playbook",
+            "target_branch": "master",
+            "target_token_name": "ACCESS_TOKEN",
+            "upstream_repo": "https://github.com/MXPicture/backblaze-personal-wine",
+            "upstream_branch": "master"
+        }
+    ]
+}
