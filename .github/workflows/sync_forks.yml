@@ -31,10 +31,10 @@ jobs:
         id: check
         with:
           script: |
-            let output = ${{ steps.get.outputs.result.repos }}
-            console.log("Count repos: " + (output.length))
+            let output = ${{ steps.get.outputs.result }}
+            console.log("Count repos: " + (output.repos.length))
             
-            if (output.length == 0) {
+            if (output.repos.length == 0) {
               console.log("empty")
               return 'true'
             } else {
