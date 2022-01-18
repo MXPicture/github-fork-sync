@@ -26,7 +26,7 @@ jobs:
         with: 
             path: 'repos.json'
             prop_path: 'repos'
-
+      - run: echo ${{steps.get.outputs.prop}} 
       - name: Check empty
         uses: actions/github-script@v5
         id: check
