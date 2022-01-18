@@ -25,7 +25,8 @@ jobs:
         uses: JoshuaTheMiller/conditional-build-matrix@0.0.1
         with:
           inputFile: './repos.json'
-          
+          filter: '[?target_repo!=`dmy`]'   
+
       - name: Check empty
         uses: actions/github-script@v5
         id: check
