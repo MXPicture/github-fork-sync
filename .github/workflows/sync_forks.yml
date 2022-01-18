@@ -18,13 +18,15 @@ jobs:
       forks: ${{ steps.get.outputs.result.repos }}
       empty_forks: ${{ steps.check.outputs.result }}
     steps:
+      - uses: actions/checkout@v2
+
       - name: Get forked repos
         id: get
         run: |
-          content=`cat ./../../repos.json`
+          content=`cat ./repos.json`
           echo "::set-output name=result::$content"
 
-      - name: Check tags empty
+      - name: Check empty
         uses: actions/github-script@v5
         id: check
         with:
