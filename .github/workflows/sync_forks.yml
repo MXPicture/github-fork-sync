@@ -22,7 +22,7 @@ jobs:
 
       - name: Get forked repos
         id: get
-        uses: JoshuaTheMiller/conditional-build-matrix        
+        uses: JoshuaTheMiller/conditional-build-matrix@0.0.1
         with:
           inputFile: './repos.json'
       - run: echo ${{fromJSON(steps.get.outputs.prop)}} 
