@@ -32,7 +32,7 @@ jobs:
         with:
           script: |
             let output = ${{ steps.get.outputs.result }}
-            console.log("Count repos: " + (output.repos.length))
+            console.log("Count repos: " + (output))
             
             if (output.repos.length == 0) {
               console.log("empty")
