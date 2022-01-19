@@ -15,7 +15,7 @@ jobs:
   get_forks:
     runs-on: ubuntu-latest
     outputs:
-      forks: ${{ steps.get.outputs.matrix }}
+      forks: ${{ steps.get.outputs.result }}
       empty_forks: ${{ steps.check.outputs.result }}
     steps:
       - uses: actions/checkout@v2
