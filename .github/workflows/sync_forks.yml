@@ -32,8 +32,8 @@ jobs:
         id: get
         with:
           script: |
-            const repos = (await github.request("https://api.github.com/users/" + context.repo.owner + "/repos"))
-            console.log(repos)
+            const repos = (await github.request("https://api.github.com/users/" + context.repo.owner + "/repos")).data
+            
             const exclude = ${{ steps.get_excluded.outputs.matrix }}
             
             let output = []
@@ -47,7 +47,7 @@ jobs:
                 continue
               }
               
-              const repo_full = (await github.request("https://api.github.com/repos/" + repo.full_name))
+              const repo_full = (await github.request("https://api.github.com/repos/" + repo.full_name)).data
               
               output.push({
                 "target_repo": repo.full_name,
