@@ -27,13 +27,13 @@ jobs:
           inputFile: './repos_exclude.json'
           filter: '[?target_repo!=`dmy`]'   
 
-      - name: Get tags, compare docker hub image dates
+      - name: Get forks
         uses: actions/github-script@v5
         id: get
         with:
           script: |
             const repos = (await github.request("https://api.github.com/users/" + context.repo.owner + "/repos"))
-            
+            console.log(repos)
             const exclude = ${{ steps.get_excluded.outputs.matrix }}
             
             let output = []
