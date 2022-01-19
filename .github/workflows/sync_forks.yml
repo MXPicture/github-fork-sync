@@ -20,22 +20,54 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Get forked repos
-        id: get
+      - name: Get forked repos to be excluded
+        id: get_excluded
         uses: JoshuaTheMiller/conditional-build-matrix@0.0.1
         with:
-          inputFile: './repos.json'
+          inputFile: './repos_exclude.json'
           filter: '[?target_repo!=`dmy`]'   
 
+      - name: Get tags, compare docker hub image dates
+        uses: actions/github-script@v5
+        id: get
+        with:
+          script: |
+            const repos = (await github.request("https://api.github.com/users/" + context.repo.owner + "/repos"))
+            
+            const exclude = ${{ steps.get_excluded.outputs.matrix }}
+            
+            let output = []
+            
+            for (const repo of repos) {
+              if (repo.fork != true) {
+                continue
+              }
+              
+              if (exclude.include.includes(repo.full_name)) {
+                continue
+              }
+              
+              const repo_full = (await github.request("https://api.github.com/repos/" + repo.full_name))
+              
+              output.push({
+                "target_repo": repo.full_name,
+                "target_branch": repo.default_branch,
+                "upstream_repo": repo_full.parent.full_name,
+                "upstream_branch": repo_full.parent.default_branch
+              })
+            }
+            
+            return output
+      
       - name: Check empty
         uses: actions/github-script@v5
         id: check
         with:
           script: |
-            let output = ${{ steps.get.outputs.matrix }}
-            console.log("Count repos: " + (output.include.length))
+            let output = ${{ steps.get.outputs.result }}
+            console.log("Count repos: " + (output.length))
 
-            if (output.include.length == 0) {
+            if (output.length == 0) {
               console.log("empty")
               return 'true'
             } else {
