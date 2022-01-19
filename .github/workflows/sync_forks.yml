@@ -82,7 +82,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: 
-        fork: ${{ fromJSON(needs.get_forks.outputs.forks).include }}
+        fork: ${{ fromJSON(needs.get_forks.outputs.forks) }}
     steps:
       # Step 1: run a standard checkout action, provided by github
       - name: Checkout target repo
