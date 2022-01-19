@@ -56,7 +56,6 @@ jobs:
                 "upstream_branch": repo_full.parent.default_branch
               })
             }
-            console.log(output)
             
             return output
       
