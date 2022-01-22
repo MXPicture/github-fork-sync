@@ -27,6 +27,13 @@ jobs:
           inputFile: './repos_exclude.json'
           filter: '[?target_repo!=`dmy`]'   
 
+      - name: Get additional repos/branches 
+        id: get_additional
+        uses: JoshuaTheMiller/conditional-build-matrix@0.0.1
+        with:
+          inputFile: './additional_branches.json'
+          filter: '[?target_repo!=`dmy`]'
+      
       - name: Get forks
         uses: actions/github-script@v5
         id: get
@@ -55,6 +62,12 @@ jobs:
                 "upstream_repo": repo_full.parent.full_name,
                 "upstream_branch": repo_full.parent.default_branch
               })
+            }
+            
+            const additionals = ${{ steps.get_additional.outputs.matrix }}
+            
+            for (const additional of additionals) {
+              output.push(additional)
             }
             
             return output
