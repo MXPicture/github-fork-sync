@@ -72,7 +72,7 @@ jobs:
               return 'true'
             } else {
               console.log("not empty")
-              return 'false'
+              return 'false' 
             }
           
   sync:
