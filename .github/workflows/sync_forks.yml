@@ -42,7 +42,8 @@ jobs:
             const repos = (await github.request("https://api.github.com/users/" + context.repo.owner + "/repos")).data
             
             const exclude = ${{ steps.get_excluded.outputs.matrix }}
-            
+            const additionals = ${{ steps.get_additional.outputs.matrix }}
+
             let output = []
             
             for (const repo of repos) {
@@ -58,16 +59,23 @@ jobs:
               
               output.push({
                 "target_repo": repo.full_name,
-                "target_branch": repo.default_branch,
+                "target_branch": repo_full.parent.default_branch,
                 "upstream_repo": repo_full.parent.full_name,
                 "upstream_branch": repo_full.parent.default_branch
               })
-            }
-            
-            const additionals = ${{ steps.get_additional.outputs.matrix }}
-            
-            for (const additional of additionals.include) {
-              output.push(additional)
+
+              for (const additional of additionals.include) {
+                if (additional.target_repo != repo.full_name) {
+                  continue
+                }
+
+                output.push({
+                  "target_repo": additional.target_repo,
+                  "target_branch": additional.target_branch,
+                  "upstream_repo": repo_full.parent.full_name,
+                  "upstream_branch": additional.upstream_branch
+                })
+              }
             }
             
             return output

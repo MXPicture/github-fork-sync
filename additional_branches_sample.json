@@ -2,7 +2,6 @@
   {
     "target_repo": "MXPicture/CyberChef",
     "target_branch": "gh-pages",
-    "upstream_repo": "gchq/CyberChef",
     "upstream_branch": "gh-pages"
   }
 ]

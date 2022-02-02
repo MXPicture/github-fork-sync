@@ -1,1 +1,17 @@
-[]
+[
+    {
+        "target_repo": "MXPicture/recipes",
+        "target_branch": "master",
+        "upstream_branch": "master"
+    },
+    {
+        "target_repo": "MXPicture/netbox",
+        "target_branch": "master",
+        "upstream_branch": "master"
+    },
+    {
+        "target_repo": "MXPicture/netbox-ansible_modules",
+        "target_branch": "master",
+        "upstream_branch": "master"
+    }
+]
